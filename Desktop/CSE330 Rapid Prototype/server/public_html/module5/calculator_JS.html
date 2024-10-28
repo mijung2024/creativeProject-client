@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator using JavaScript</title>
+</head>
+
+<body>
+    <h1>Calculator</h1>
+
+    <label for="input1">First Input Value:</label>
+    <input type="number" name="input1" id="input1" step="any" required><br><br>
+
+    <label for="input2">Second Input Value:</label>
+    <input type="number" name="input2" id="input2" step="any" required><br><br>
+
+    <h3>Operation:</h3>
+    <input type="radio" name="calculator" value="addition" id="addition" required>
+    <label for="addition">+</label><br>
+
+    <input type="radio" name="calculator" value="subtraction" id="subtraction" required>
+    <label for="subtraction">-</label><br>
+
+    <input type="radio" name="calculator" value="multiplication" id="multiplication" required>
+    <label for="multiplication">×</label><br>
+
+    <input type="radio" name="calculator" value="division" id="division" required>
+    <label for="division">÷</label><br><br>
+
+
+    <div class="result" id="result">Result: </div>
+
+    <script>
+        const input1 = document.getElementById('input1');
+        const input2 = document.getElementById('input2');
+        const result = document.getElementById('result');
+        const operation = document.querySelectorAll('input[name="calculator"]');
+
+        function calculate() {
+            const input1Num = parseFloat(input1.value);
+            const input2Num = parseFloat(input2.value);
+            let operationChecked = document.querySelector('input[name="calculator"]:checked');
+
+            if (!isNaN(input1Num) && !isNaN(input2Num)) {
+                if (operationChecked) {
+                    if (operationChecked.value === 'addition') {
+                        result.textContent = `${input1Num + input2Num}`;
+                    } else if (operationChecked.value === 'subtraction') {
+                        result.textContent = `${input1Num - input2Num}`;
+                    } else if (operationChecked.value === 'multiplication') {
+                        result.textContent = `${input1Num * input2Num}`;
+                    } else if (operationChecked.value === 'division') {
+                        if (input2Num !== 0) {
+                            result.textContent = `${input1Num / input2Num}`;
+                        } else {
+                            result.textContent = 'Error: Cannot divide by 0';
+                        }
+                    }
+                }
+                else {
+                    result.textContent = 'Choose Operation';
+
+                }
+            } else {
+                result.textContent = 'Missing Input value';
+            }
+        }
+
+        input1.addEventListener('keyup', calculate);
+        input2.addEventListener('keyup', calculate);
+        operation.forEach(radio => radio.addEventListener('change', calculate));
+
+    </script>
+</body>
+
+</html>

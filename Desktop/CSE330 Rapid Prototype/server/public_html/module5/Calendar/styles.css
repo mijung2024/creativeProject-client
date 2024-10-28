@@ -1,0 +1,302 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* To override */
+@media (min-width: 500px) {
+
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl,
+    .container-xxl {
+        max-width: 100%;
+    }
+}
+
+.sidebar {
+    width: 20%;
+    min-width: 214.5px;
+    background-color: #f9f9f9;
+    padding: 20px;
+
+}
+
+.sidebar h2 {
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    margin-top: 10px;
+
+}
+
+.sidebar form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.loginForm input,
+.loginForm button,
+.loginForm a,
+.registerForm input,
+.registerForm button,
+.registerForm a {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.loginForm input {
+    height: 30px;
+
+}
+
+.loginForm button {
+    width: 100%;
+}
+
+.loginForm a {
+    margin-top: 10px;
+}
+
+.loginMessage {
+    margin-top: 10px;
+}
+
+.loggedinStatus button {
+    margin-top: 20px;
+    position: absolute;
+    bottom: 20px;
+}
+
+#calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#prev-next-buttons {
+    position: absolute;
+    left: 0;
+    display: flex;
+    gap: 10px;
+}
+
+#month-year {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+}
+
+#calendar-section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    padding-top: 30px;
+}
+
+#calendar-bar {
+    width: 100%;
+    border-collapse: collapse;
+    height: 100%;
+}
+
+#calendar-bar th,
+#calendar-bar td {
+    width: calc(100% / 7);
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+#calendar-bar th {
+    font-weight: bold;
+}
+
+#calendar-bar tbody {
+    display: block;
+}
+
+#calendar-bar tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+}
+
+#calendar-bar td {
+    text-align: right;
+    vertical-align: top;
+    position: relative;
+}
+
+#calendar-body tr {
+    height: 110px;
+
+}
+
+
+
+#calendar-bar td.today {
+    background-color: rgba(13, 109, 253, 0.063);
+}
+
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#close-modal:hover {
+    color: red;
+}
+
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background-color: #f1f1f1;
+    /* Change this for your button background */
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-menu {
+    display: none;
+    /* Hidden by default */
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1;
+    width: 100%;
+    max-height: 200px;
+    /* Optional max height */
+    overflow-y: auto;
+    /* Enable scroll if the dropdown exceeds max height */
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+    /* Highlight on hover */
+}
+
+/* Event type colors */
+.dropdown-item.work .color-circle,
+.event.work {
+    background-color: #fAAf6F;
+}
+
+.dropdown-item.home .color-circle,
+.event.home {
+    background-color: #f3b2a6;
+}
+
+.dropdown-item.school .color-circle,
+.event.school {
+    background-color: #c1c39d;
+}
+
+.dropdown-item.friend .color-circle,
+.event.friend {
+    background-color: #f3dfcd;
+}
+
+.dropdown-item.travel .color-circle,
+.event.travel {
+    background-color: #bec8d3;
+}
+
+.dropdown-item.etc .color-circle,
+.event.etc {
+    background-color: #b8b19a;
+}
+
+/* Styling for the color circle */
+.color-circle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.color-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.dropdown-item.selected {
+    background-color: #e0e0e0;
+    /* Highlight selected item */
+}
+
+.dropdown-menu {
+    display: none;
+    /* Initially hide */
+    position: absolute;
+    /* Position it appropriately */
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+.event {
+    padding: 2px;
+    margin: 2px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
