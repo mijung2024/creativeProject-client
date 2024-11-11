@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #fff3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.chatApp {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    gap: 0;
+    width: 80%;
+    height: 90vh;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.left_bar,
+.chatBox,
+.right_bar {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+}
+
+
+.logo {
+    font-size: 2em;
+    color: #f97878;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.user_box {
+    background-color: #fff3f3;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+
+.user {
+    height: 5vh;
+    background-color: #fff3f3;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+#user_display {
+
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.user,
+.myrooms,
+.active_rooms,
+.room_users .users {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #555555;
+}
+
+.my_rooms_list,
+.active_rooms_list,
+.room_users_list,
+.inbox_messages {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.active_rooms {
+    margin-bottom: 5px;
+    padding: 3px;
+}
+
+.my_rooms {
+    margin-bottom: 5px;
+}
+
+.inbox_messages {
+    height: 20vh;
+    margin-bottom: 20px;
+}
+
+.inbox_messages {
+    margin-bottom: 5px;
+}
+
+.active_rooms_list {
+    flex: 1;
+}
+
+.chatBox {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff3f3;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.chatlog {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+}
+
+.chat_input {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.to_type {
+    margin-bottom: 5px;
+    align-items: start;
+}
+
+.input_group {
+    display: flex;
+    align-items: center;
+    align-items: center;
+}
+
+#message_input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.send_message_btn {
+    padding: 10px 15px;
+    background-color: #f48f8f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.room_users {
+    flex: 1;
+    margin-top: 20px;
+}
+
+.room_users_list {
+    height: 70vh;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    overflow-y: auto;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.create_room {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.create_room input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.room_add {
+    padding: 10px;
+    background-color: #f48f8f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/*Login Modal CSS*/
+
+/* Modal overlay background */
+.login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    /* Make sure it overlays everything else */
+}
+
+/* Modal box */
+.login-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+}
+
+.login-modal h2 {
+    margin-bottom: 15px;
+}
+
+.login-modal input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-modal .login_button {
+    width: 100%;
+    padding: 10px;
+    background-color: #f48f8f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-modal .login_button:hover {
+    background-color: #f26b6b;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+.user_card button {
+    margin-top: 5px;
+    display: inline-block;
+    padding: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.user_card button:hover {
+    background-color: #ddd;
+}
+
+.message {
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.timestamp {
+    display: none;
+    position: absolute;
+    font-size: 0.8em;
+    color: gray;
+    bottom: -15px;
+    left: 0;
+}
+
+.message:hover .timestamp {
+    display: inline-block;
+}
+
+.inbox-message {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.inbox-message button {
+    margin-left: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#room_name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #555555;
+    margin-bottom: 5px;
+}
+
+#room_name_info {
+    font-size: 1rem;
+    font-style: italic;
+    color: #666;
+}
+
+.room_name_box {
+    background-color: #f48f8f;
+    border-radius: 5px;
+    margin: 0;
+    padding: 10px;
+}

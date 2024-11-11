@@ -1,4 +1,6 @@
-let token = null;
+let token = localStorage.getItem('token') || null;
+let userFullName = localStorage.getItem('name') || null;
+
 
 $('#loginBtn').on('click', function (e) {
     e.preventDefault();
@@ -13,7 +15,7 @@ $('#loginBtn').on('click', function (e) {
         body: JSON.stringify(data),
         headers: { 'content-type': 'application/json' }
     })
-        .then(response => response.json()) // Use .json() to parse directly as JSON
+        .then(response => response.json())
         .then(jsonResponse => {
             if (jsonResponse.success) {
 
@@ -22,8 +24,14 @@ $('#loginBtn').on('click', function (e) {
 
                 $(".loginForm").hide();
                 $(".add_event_btn").show();
-                $("#logout_div").show();  // Show logout button on successful login
+                $("#logout_div").show
+                    ();
                 token = jsonResponse.token;
+                userFullName = jsonResponse.fullname;
+
+                localStorage.setItem('token', token);
+                localStorage.setItem('name', userFullName);
+
                 updateCalendar();
             } else {
                 $("#loginMessage").text(jsonResponse.msg);
@@ -34,6 +42,7 @@ $('#loginBtn').on('click', function (e) {
             $("#loginMessage").text("Login failed. Please try again.");
         });
 });
+
 
 $('#registerBtn').on('click', function (e) {
     e.preventDefault();
@@ -91,18 +100,56 @@ $('#logoutBtn').on('click', function (e) {
         .then(response => response.json())
         .then(response => {
             if (response.success) {
-                token = null;  // Reset token on logout
+                token = null;
+
                 username = null;
                 $('#username').val('');
                 $('#password').val('');
-                // Update UI to reflect the logout
+
                 $('.loginForm').show();
                 $('.registerForm').hide();
                 $('.loggedinStatus').hide();
-                $('#greetingMessage').text("");  // Clear greeting message
-                $("#logout_div").hide();  // Hide logout button
-                $(".add_event_btn").hide();  // Hide event buttons after logout
+                $('#greetingMessage').text("");
+                $("#logout_div").hide();
+                $(".add_event_btn").hide();
+                clearEvents();
+                localStorage.removeItem('token');
+                s
+                localStorage.removeItem('userFullName');
+                s
+
+
             }
         })
         .catch(err => console.error(err));
 });
+
+function authenticateUser(token) {
+    const path = 'validate_token.php'; // Server endpoint to validate token
+
+    fetch(path, {
+        method: 'POST',
+        body: JSON.stringify({ 'token': token }),
+        headers: { 'content-type': 'application/json' }
+    })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (jsonResponse.success) {
+                $(".loggedinStatus").show();
+                $("#greetingMessage").text(`Welcome back, ${userFullName}!`);
+                $(".loginForm").hide();
+                $(".add_event_btn").show();
+                $("#logout_div").show();
+                updateCalendar();
+
+
+            } else {
+                // Clear token if it’s invalid
+                localStorage.removeItem('token');
+                localStorage.removeItem('name');
+            }
+        })
+        .catch(err => {
+            console.error('Token validation error:', err);
+        });
+}

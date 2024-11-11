@@ -1,4 +1,3 @@
-// Extending the Date prototype
 (function () {
     Date.prototype.deltaDays = function (c) {
         return new Date(this.getFullYear(), this.getMonth(), this.getDate() + c);
@@ -57,6 +56,7 @@ var currentMonth = new Month(new Date().getFullYear(), new Date().getMonth());
 
 // Function to update the calendar in the DOM
 function updateCalendar() {
+
     var weeks = currentMonth.getWeeks();
     var calendarBody = document.getElementById("calendar-body");
     calendarBody.innerHTML = ''; // Clear previous calendar
@@ -66,6 +66,9 @@ function updateCalendar() {
         var days = week.getDates();
 
         days.forEach(function (day) {
+
+
+
             const dayOfMonth = day.getDate();
             const cellId = `date-${day.getFullYear()}-${day.getMonth() + 1}-${dayOfMonth}`; // Unique ID for each cell
             const dateCell = document.createElement('td');
@@ -73,7 +76,17 @@ function updateCalendar() {
             dateCell.textContent = dayOfMonth;
 
             dateCell.addEventListener('click', function () {
-                openEventModal(day); // Function to handle event creation/modification
+
+
+                if (token) {
+                    openEventModal(day); // Function to handle event creation/modification
+                    document.getElementById("save-changes").style.display = 'flex';
+                    document.getElementById("edit-changes").style.display = 'none';
+                } else {
+                    alert("Please log in to add or view events.");
+
+                }
+
             });
 
             // Highlight today's date
@@ -91,7 +104,7 @@ function updateCalendar() {
         "July", "August", "September", "October", "November", "December"];
     document.getElementById('month-year').textContent = `${monthNames[currentMonth.month]} ${currentMonth.year}`;
 
-    fetchEvents(); // Fetch events for the current month
+    fetchEvents();
 }
 
 // Event listeners for navigation buttons
@@ -105,8 +118,10 @@ document.getElementById("prev-month").addEventListener("click", function () {
     updateCalendar(); // Update the calendar display
 });
 
+
 // Fetch events from the server
 function fetchEvents() {
+
     document.querySelectorAll('.event').forEach(event => event.remove());
 
     const data = { 'token': token }; // Adjust as necessary for your token
@@ -120,15 +135,85 @@ function fetchEvents() {
         .then(response => {
             if (response.success) {
                 response.events.forEach(event => {
-                    const eventDate = new Date(event.date);
-                    const cellId = `date-${eventDate.getFullYear()}-${eventDate.getMonth() + 1}-${eventDate.getDate() + 1}`;
+                    const eventDate = new Date(event.date + 'Z'); // Treat as UTC
+
+                    const day = eventDate.getUTCDate(); // Use getUTCDate to avoid local timezone issues
+                    const month = eventDate.getUTCMonth() + 1; // Months are zero-based
+                    const year = eventDate.getUTCFullYear();
+                    const cellId = `date-${year}-${month}-${day}`;
+
                     const dateCell = document.getElementById(cellId);
 
                     if (dateCell) {
+
                         const eventDiv = document.createElement('div');
                         eventDiv.className = `event ${event.type}`;
-                        eventDiv.textContent = `${event.time} ${event.name}`;
+                        eventDiv.setAttribute('data-event-id', event.id); // Add this line
+
+                        // Text container for time and event name
+                        const eventText = document.createElement('span');
+                        eventText.className = 'event-text';
+                        eventText.textContent = `${event.time} ${event.name}`;
+
+                        // Icons container
+                        const iconContainer = document.createElement('span');
+                        iconContainer.className = 'icon-container';
+
+                        // Edit icon
+                        const editIcon = document.createElement('i');
+                        editIcon.className = 'bi bi-pencil-square edit-icon';
+                        editIcon.title = 'Edit';
+                        editIcon.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            editEvent(event.id);
+                        });
+
+                        // Delete icon
+                        const deleteIcon = document.createElement('span');
+                        deleteIcon.className = 'delete-icon';
+                        deleteIcon.title = 'Delete';
+                        deleteIcon.innerHTML = '&times;';
+                        deleteIcon.addEventListener('click', function (e) {
+                            e.stopPropagation();
+                            deleteEvent(event.id);
+                        });
+
+                        iconContainer.appendChild(editIcon);
+                        iconContainer.appendChild(deleteIcon);
+                        eventDiv.appendChild(eventText);
+                        eventDiv.appendChild(iconContainer);
+
                         dateCell.appendChild(eventDiv);
+
+
+                        if (event.duration > 1) {
+                            const eventDate = new Date(event.date + 'Z'); // Treat as UTC
+
+                            const day = eventDate.getUTCDate(); // Use getUTCDate to avoid local timezone issues
+                            const month = eventDate.getUTCMonth() + 1; // Months are zero-based
+                            const year = eventDate.getUTCFullYear();
+                            const cellId = `date-${year}-${month}-${day}`;
+
+                            const dateCell = document.getElementById(cellId);
+
+
+
+
+
+                            for (let i = 1; i < event.duration; i++) {
+                                const nextDate = new Date(eventDate);
+                                nextDate.setDate(eventDate.getDate() + i);
+                                const nextCellId = `date-${nextDate.getFullYear()}-${nextDate.getMonth() + 1}-${nextDate.getDate()}`;
+                                const nextCell = document.getElementById(nextCellId);
+
+                                if (nextCell) {
+                                    const continuedEventDiv = document.createElement('div');
+                                    continuedEventDiv.className = `event continued ${event.type}`; // Add continued class
+                                    continuedEventDiv.textContent = `${event.time} ${event.name}`; // Display same text
+                                    nextCell.appendChild(continuedEventDiv);
+                                }
+                            }
+                        }
                     }
                 });
             } else {
@@ -140,7 +225,17 @@ function fetchEvents() {
         });
 }
 
+
 // Initial call to set up the calendar
 document.addEventListener('DOMContentLoaded', function () {
-    updateCalendar();
+    const token = localStorage.getItem('token');
+    if (token) {
+        authenticateUser(token);
+    }
+    else {
+        updateCalendar();
+    }
 });
+function clearEvents() {
+    document.querySelectorAll('.event').forEach(event => event.remove());
+}

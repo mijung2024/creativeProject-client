@@ -4,13 +4,12 @@ ini_set("session.cookie_httponly", 1);
 session_start();
 require("database.php");
 header("Content-Type: application/json");
-/* 
-// Check if the user is logged in
+
 if (!isset($_SESSION['username'])) {
     echo json_encode(array("success" => false, "msg" => "You must be logged in to display events."));
     exit;
 }
- */
+ 
 // Get the JSON input
 $json_input = file_get_contents('php://input');
 $json_obj = json_decode($json_input, true);

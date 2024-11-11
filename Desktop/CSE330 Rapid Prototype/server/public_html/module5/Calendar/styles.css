@@ -290,7 +290,10 @@ body {
 }
 
 .event {
-    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px;
     margin: 2px;
     border-radius: 3px;
     font-size: 12px;
@@ -298,5 +301,78 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: left;
+    position: relative;
+}
+
+.event-duration {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    /* Full height of the calendar cell */
+}
+
+.calendar-day {
+    position: relative;
+}
+
+
+
+
+.event.continued {
+    background-color: rgba(0, 123, 255, 0.5);
+    border: 1px dashed #007bff;
+    /* Good for visibility */
+    z-index: 1;
+    /* Ensure continued events are on top */
+}
+
+/* Prevent overlap of multiple events in the same cell */
+.event {
+    z-index: 2;
+    /* Stack events, adjust if necessary */
+}
+
+
+
+
+.event.etc {
+    padding: 0;
+}
+
+.event-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.icon-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.edit-icon {
+    cursor: pointer;
+    font-size: 11px;
+    color: white;
+    transition: color 0.3s;
+}
+
+.delete-icon {
+    font-size: 15px;
+    cursor: pointer;
+    color: white;
+    transition: color 0.3s;
+    padding-right: 2px;
+
+}
+
+.edit-icon:hover {
+    color: #007bff;
+}
+
+.delete-icon:hover {
+    color: #dc3545;
 }

@@ -13,7 +13,7 @@ function selectEventType(value) {
 
 
 function openEventModal(date = new Date()) {
-    // Display the modal
+
     const eventModal = document.getElementById('event-modal');
     eventModal.style.display = 'flex';
 

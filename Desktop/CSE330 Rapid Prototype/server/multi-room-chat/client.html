@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+   <meta charset="UTF-8">
+   <title>Multi-room Chat</title>
+   <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+   <div class="chatApp">
+
+      <div class="login-overlay" id="login-overlay">
+         <div class="login-modal">
+            <h2>Welcome to Chat-Chat!</h2>
+            <input type="text" id="username_input" placeholder="Enter Username">
+            <button type="button" class="login_button" id="login_button">Login</button>
+            <p id="login-error" class="error-message"></p>
+         </div>
+      </div>
+
+      <div class="left_bar" id="left_bar">
+         <div class="logo">
+            <span>Chat-Chat!</span>
+         </div>
+         <div class="user_box">
+            <div class="user">
+               <div id="user_display">Hi, </div>
+            </div>
+            <span class="myrooms">Private Message Inbox</span>
+            <div class="inbox_messages" id="inbox_messages"></div>
+            <!-- 
+            <div class="my_rooms_list" id="my_rooms_list"></div> -->
+         </div>
+         <span class="active_rooms">Rooms</span>
+         <div class="active_rooms_list" id="active_rooms_list"></div>
+      </div>
+
+      <div class="chatBox">
+         <div class="room_name_box">
+            <div class="room_name" id="room_name"></div>
+            <div class="room_name_info" id="room_name_info"></div>
+         </div>
+         <div class="chatlog" id="chatlog"> </div>
+         <div class="chat_input">
+            <div class="message">
+               <div class="to_type">
+                  <span>To: </span>
+                  <select id="recipient_select" class="type_toggle">
+                     <option value="everyone">Everyone</option>
+                  </select>
+               </div>
+               <div class="input_group">
+                  <input type="text" id="message_input" placeholder="Enter Message">
+                  <button type="button" id="send_message_btn" onclick="sendMessage()"
+                     class="send_message_btn">Send</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="right_bar" id="right_bar">
+         <div class="room_users" id="room_users">
+            <span class="users">Users:</span>
+            <div class="active_users_list" id="active_users_list"></div>
+         </div>
+         <div class="create_room">
+            <input type="text" id="room_input_name" placeholder="Create Room">
+            <button type="button" id="room_add" class="room_add" onclick="createRoom()">+</button>
+         </div>
+      </div>
+
+   </div>
+   <script src="/socket.io/socket.io.js"></script>
+   <script src="chat.js" defer></script>
+</body>
+
+</html>
